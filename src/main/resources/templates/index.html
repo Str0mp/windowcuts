@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+			<link rel="icon" type="image/png" href="images/icons/ventana.png"/>
+<script type="text/javascript" src="../main.js"></script>
+<link rel="stylesheet" href="../main.css">
+<title>Window Cuts</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<a class="navbar-brand" href="/index">Window Cuts</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item active"><a class="nav-link" href="/index">Agregar
+						proyecto <span class="sr-only">(current)</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="/agregarVentana">Agregar
+						ventanas</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/buscarProyectos">Ver proyectos</a></li>
+					
+					<li class="nav-item">
+								<a class="nav-link" sec:authorize="isAuthenticated()" href="/logout">Cerrar sesión</a>
+							</li>
+			</ul>
+		</div>
+	</nav>
+	<br>
+	<div class="container">
+		<form th:action="@{/saveProyecto}" th:object="${Proyecto}"
+			method="POST">
+			<div class="col-md-6">
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroup-sizing-sm">Fecha
+							Proyecto
+							&zwnj;&zwnj;&zwnj;&zwnj;&zwnj;&zwnj;&zwnj;&zwnj;&zwnj;&zwnj;
+							&zwnj; &zwnj; &zwnj;</span>
+					</div>
+					<input type="date" class="form-control"
+						aria-describedby="inputGroup-sizing-sm" id="fechaProyecto"
+						name="fechaProyecto" th:field="${Proyecto.fechaProyecto}" required>
+				</div>
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroup-sizing-sm">Nombre
+							Proyecto</span>
+					</div>
+					<input type="text" class="form-control"
+						aria-describedby="inputGroup-sizing-sm" id="nombreProyecto"
+						name="nombreProyecto" th:field="${Proyecto.nombreProyecto}"
+						required>
+					<div class="input-group-append">
+						<button class="btn btn-outline-primary" type="submit"
+							id="button-addon2">Guardar proyecto</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+	<div class="container">
+
+		<table id="tablaProyectos"
+			class="table table-bordered table-sm table-fit fixTable">
+			<tr>
+				<th>Fecha Proyecto</th>
+				<th>Nombre proyecto</th>
+				<th>Acciones</th>
+			</tr>
+			<tr th:each="proyecto : ${listaProyectos}" >
+				<th th:text="${proyecto.fechaProyecto}"></th>
+				<th th:text="${proyecto.nombreProyecto}"></th>
+				<th>
+					<form th:object="${Proyecto}" th:action="@{/eliminarProyecto}" method="post" id='formEliminar' name='formEliminar'>
+					<input type="hidden" id='idProyecto' name='idProyecto' th:attr="value = ${proyecto.idProyecto}"/>
+					<button type="button" class='btn btn-outline-danger centerItems' id='btnEliminar' name='btnEliminar'>Eliminar proyecto</button>
+					</form>
+				</th>
+				
+			</tr>
+
+		</table>
+	</div>
+
+
+
+
+
+
+	<div class="fixed-bottom">
+		<footer class="bg-light text-center text-lg-start">
+			<!-- Copyright -->
+			<div class="text-center p-3"
+				style="background-color: rgba(0, 0, 0, 0.2)">
+				© 2021, Hecho con ♥ por <a class="text-dark"
+					href="https://www.jorgemartini.cl/">https://jorgemartini.cl/</a>
+			</div>
+			<!-- Copyright -->
+		</footer>
+	</div>
+</body>
+</html>

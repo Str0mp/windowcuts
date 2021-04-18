@@ -1,0 +1,65 @@
+
+/* Media Query para dispositivos con resoluciones grandes: Computador */
+/* Los estilos de esta @media se aplican entre las resoluciones: 1199.98px - 991.99px */
+@media (max-width: 1199.98px) {
+}
+
+/* Media Query para dispositivos con resoluciones medianas-grandes: Ipad, Computadores */
+/* Los estilos de esta @media se aplican entre las resoluciones: 991.98px - 767.99px */
+@media (max-width: 991.98px) {
+}
+
+ /*Media Query para dispositivos con resoluciones medianas: Tablet */
+ /* Los estilos de esta @media se aplican entre las resoluciones: 767.98px - 575.99px */
+ @media (max-width: 767.98px) {
+    .content-form {
+        flex-flow: column nowrap;
+    }
+
+    .first-content-form, .second-content-form, .four-content-form {
+        width: 100%;
+        padding: 0 35px;
+    }
+
+    .four-content-form {
+        padding: 0;
+        flex-flow: column nowrap;
+    }
+}
+
+/* Media Query para dispositivos con resoluciones pequeñas: Celular */
+/* Los estilos de esta @media se aplican entre las resoluciones: 575.98px hacia abajo*/
+@media (max-width: 575.98px ) {
+    .login {
+        padding: 10%;
+    }
+
+    .navbar__element:first-child {
+        display: none;
+    }
+
+    .navbar__separator:nth-child(0){
+        display: none;
+    }
+
+    .navbar__element p {
+        text-align: center;
+    }
+
+    .wrapper .sidemenu {
+        position: absolute;
+        z-index: 10;
+    }
+
+    .sidemenu__logo img {
+        width: 100px;
+    }
+
+    .sidemenu__btn {
+        width: 60px;
+    }
+
+    .sidemenu__item a {
+        padding: 10px 20px;
+    }
+ }

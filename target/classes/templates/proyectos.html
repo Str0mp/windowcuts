@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <link rel="icon" type="image/png" href="images/icons/ventana.png" />
+    <script type="text/javascript" src="../main.js"></script>
+    <link rel="stylesheet" href="../main.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <title>Window Cuts</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="/index">Window Cuts</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/index">
+              Agregar proyecto
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/agregarVentana">Agregar ventanas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/buscarProyectos">Ver proyectos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" sec:authorize="isAuthenticated()" href="/logout">Cerrar sesión</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <br />
+    <div class="container">
+      <div class="row justify-content-center">
+        <h1 th:text="${viewProyecto.nombreProyecto}" id="nombreProyecto"></h1>
+      </div>
+      <div class="row justify-content-center">
+        <h3 th:text="${viewProyecto.fechaProyecto}" id="fechaProyecto"></h3>
+      </div>
+    </div>
+    <div class="container">
+      <div>
+        <button id="descargarExcel" class="btn btn-outline-success">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-spreadsheet" viewBox="0 0 16 16">
+            <path
+              d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5v2zM3 12v-2h2v2H3zm0 1h2v2H4a1 1 0 0 1-1-1v-1zm3 2v-2h3v2H6zm4 0v-2h3v1a1 1 0 0 1-1 1h-2zm3-3h-3v-2h3v2zm-7 0v-2h3v2H6z"
+            />
+          </svg>
+          Descargar Excel
+        </button>
+      </div>
+    </div>
+    <br />
+    <div class="container">
+      <div class="table-responsive fixed-table-body fixTable">
+        <table id="tablaProyecto" class="table table-bordered table-sm table-fit">
+          <tr>
+            <th>Descripción</th>
+            <th class="noExport">Ancho</th>
+            <th class="noExport">Alto</th>
+            <th>Cantidad</th>
+            <th style="display: none;">DVD</th>
+            <!-- 					<th style='display: none'>Vidrio Paño Fijo Alto</th> -->
+            <th style="display: none;">DVH</th>
+            <!-- 					<th style='display: none'>Vidrio Hoja Movil Alto</th> -->
+            <th style="display: none;">DVH3</th>
+            <!-- 					<th style='display: none'>Vidrio Marco Fijo Completo Alto</th> -->
+            <!-- 					<th style='display: none'>Marco Corredera Ancho</th> -->
+            <!-- 					<th style='display: none'>Marco Corredera Alto</th> -->
+            <th style="display: none;">Traslapo F.</th>
+            <th style="display: none;">Traslapo M.</th>
+            <th style="display: none;">Hoja Movil X.</th>
+            <!-- 				<th style='display: none'>Hoja Movil Alto</th> -->
+            <th class="noExport">Acciones</th>
+          </tr>
+          <tr th:each="listaVentana : ${viewProyecto.idVentana}">
+            <th th:text="${listaVentana.descripcionVentana}"></th>
+            <th th:text="${listaVentana.ancho}" class="noExport"></th>
+            <th th:text="${listaVentana.alto}" class="noExport"></th>
+            <th th:text="${listaVentana.cantidad}"></th>
+            <label th:each="listaVidrio : ${listaVentana.idVidrio}" style="display: none;">
+              <th th:text="${listaVidrio.anchoCorte} + ' X ' + ${listaVidrio.altoCorte}" style="display: none;"></th>
+              <!-- 					<th th:text="${listaVidrio.altoCorte}" style='display: none'></th> -->
+            </label>
+            <label th:each="listaPerfil : ${listaVentana.idPerfil}" style="display: none;">
+              <th th:if="${listaPerfil.isPerfilSoloAlto()}" th:text="${listaPerfil.anchoCorte}" style="display: none;"></th>
+              <th  th:if="${listaPerfil.isPerfilHojaMovil()}" th:text="${listaPerfil.altoCorte}" style="display: none;"></th>
+            </label>
+            <th class="noExl">
+              <form method="post" th:object="${Proyecto}" th:action="@{/eliminarVentana}" class="noExl">
+                <input type="hidden" name="idProyecto" id="idProyecto" th:value="${viewProyecto.idProyecto}" class="noExl" />
+                <input type="hidden" name="idVentana" id="idVentana" th:attr="value = ${listaVentana.idVentana}" class="noExl" />
+                <button class="btn btn-outline-danger centerItems noExl" name="btnEliminarVentana" id="btnEliminarVentana">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash noExl" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                    <path
+                      fill-rule="evenodd"
+                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                    />
+                  </svg>
+                </button>
+              </form>
+            </th>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="fixed-bottom">
+      <footer class="bg-light text-center text-lg-start">
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+          © 2021, Hecho con ♥ por
+          <a class="text-dark" href="https://www.jorgemartini.cl/">https://jorgemartini.cl/</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+    </div>
+  </body>
+</html>

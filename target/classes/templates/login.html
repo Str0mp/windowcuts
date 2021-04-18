@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="js/hn.main.1.0.0.js"></script>
+	<link rel="icon" type="image/png" href="images/icons/ventana.png"/>
+	<link rel="stylesheet" href="css/hn.fonts.css"/>
+	<link rel="stylesheet" href="css/hn.main.css"/>
+	<title>Ingreso</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body id="login"> 
+    <!-- Contenedor principal -->
+	<div class="main-container main--login">
+		<div class="login">
+			<div class="login__content">
+                <i class="login__logo ico--ice"></i>
+                <h1 class="login__title">Bienvenido</h1>
+                <form th:action="@{/login}" method="post">
+                    <!-- Mensaje de usuario o contraseña incorrecta -->
+					<div th:if="${param.error}">
+						<div class="alert alert--danger">
+                            <i class="alert__ico ico--danger"></i>
+                            <p class="alert__text">Usuario o contraseña incorrectos.</p>
+                        </div>
+					</div>
+					<!-- Mensaje de cierre de sesión -->
+					<div th:if="${param.logout}">
+						<div class="alert alert--sucess">
+                            <i class="alert__ico ico--sucess"></i>
+                            <p class="alert__text">Has cerrado tu sesión exitosamente.</p>
+                        </div>
+					</div>
+					<div class="loginform">
+						<div class="loginform__header">
+							<i class="login__ico ico--userlogin"></i>
+						</div>
+						<div class="loginform__content">
+							<label class="login__label" for="username"> Usuario</label> 
+                        	<input type="text" class="login__input" id="username" name="username">
+						</div>
+					</div>
+					<div class="loginform">
+						<div class="loginform__header">
+							<i class="login__ico ico--padlock"></i>
+						</div>
+						<div class="loginform__content">
+							<label class="login__label" for="username"> Contraseña</label> 
+                        	<input type="password" class="login__input" id="password" name="password">
+						</div>
+                        
+					</div>
+					<div class="">
+                        <div class="login__row">
+                            <input type="submit" name="login-submit" id="login-submit" class="btn btn--primary" value="Ingresar">
+                        </div>
+							
+					</div>
+				</form>
+				<!--
+				<div class="">
+					<span>Eres nuevo en Hielos Nevados? <a href="/" th:href="@{/registration}">
+							Registrate aquí</a></span>
+				</div>-->
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

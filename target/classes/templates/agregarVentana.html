@@ -1,0 +1,137 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+			<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+			<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+		<link rel="icon" type="image/png" href="images/icons/ventana.png"/>
+			<script type="text/javascript" src="../main.js"></script>
+			<link rel="stylesheet" href="../main.css">
+			
+				<title>Window Cuts</title>
+			</head>
+			<body>
+				<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+					<a class="navbar-brand" href="/index">Window Cuts</a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarNav">
+						<ul class="navbar-nav">
+							<li class="nav-item">
+								<a class="nav-link" href="/index">Agregar
+						proyecto 
+									<span class="sr-only">(current)</span>
+								</a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link"
+					href="/agregarVentana">Agregar ventanas</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="/buscarProyectos">Ver
+						proyectos</a>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" sec:authorize="isAuthenticated()" href="/logout">Cerrar sesión</a>
+							</li>
+							
+						</ul>
+					</div>
+					
+					
+                </a>
+				</nav>
+				<br>
+					<div class="container">
+						<form th:action="@{/saveVentana}" th:object="${Ventana}" method="POST">
+							<div class="col-md-6">
+								<div class="input-group mb-3">
+									<select th:object="${Proyecto}" th:field="${Proyecto.idProyecto}"
+						required class="custom-select">
+										<option th:value="NULL" selected> Seleccione un proyecto</option>
+										<option th:each="tablaProyecto : ${listaProyectos}"
+							th:value="${tablaProyecto.idProyecto}"
+							th:text="${tablaProyecto.nombreProyecto}"></option>
+									</select>
+								</div>
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="inputGroup-sizing-sm">Ancho&zwnj;&zwnj;&zwnj; &zwnj;&zwnj;&zwnj; &zwnj;&zwnj;&zwnj;
+							&zwnj;&zwnj;
+						</span>
+									</div>
+									<input type="text" class="form-control"
+						aria-describedby="inputGroup-sizing-sm" id="ancho" name="ancho"
+						th:field="${Ventana.ancho}" required>
+									</div>
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroup-sizing-sm">Alto
+							&zwnj;&zwnj;&zwnj; &zwnj;&zwnj;&zwnj; &zwnj;&zwnj;&zwnj;
+							&zwnj;&zwnj;&zwnj;&zwnj;&zwnj; &zwnj;&zwnj;&zwnj; &zwnj;&zwnj;&zwnj;
+							&zwnj;&zwnj; </span>
+										</div>
+										<input type="text" class="form-control"
+						aria-describedby="inputGroup-sizing-sm" id="alto" name="alto"
+						th:field="${Ventana.alto}" required>
+											
+										</div>
+										
+										<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroup-sizing-sm">Cantidad</span>
+										</div>
+										<input type="text" class="form-control"
+						aria-describedby="inputGroup-sizing-sm" id="cantidad" name="cantidad"
+						th:field="${Ventana.cantidad}" required>
+											
+										</div>
+										
+										<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroup-sizing-sm">Ítem
+							&zwnj;&zwnj;&zwnj; &zwnj;&zwnj;&zwnj; &zwnj;&zwnj;&zwnj;
+							&zwnj;&zwnj;&zwnj;&zwnj;&zwnj; &zwnj;&zwnj;&zwnj; &zwnj;&zwnj;&zwnj;
+							&zwnj;&zwnj;</span>
+										</div>
+										<input type="text" class="form-control"
+						aria-describedby="inputGroup-sizing-sm" id="descripcionVentana" name="descripcionVentana"
+						th:field="${Ventana.descripcionVentana}" required>
+											<div class="input-group-append">
+												<button class="btn btn-outline-primary" type="submit"
+							id="button-addon2">Guardar ventana</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="fixed-bottom">
+								<footer class="bg-light text-center text-lg-start">
+									<!-- Copyright -->
+									<div class="text-center p-3"
+				style="background-color: rgba(0, 0, 0, 0.2)">
+				© 2021, Hecho con ♥ por 
+										<a class="text-dark"
+					href="https://www.jorgemartini.cl/">https://jorgemartini.cl/</a>
+									</div>
+									<!-- Copyright -->
+								</footer>
+							</div>
+						</body>
+					</html>

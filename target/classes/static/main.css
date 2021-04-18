@@ -1,0 +1,13 @@
+.table td.fit, .table th.fit {
+	white-space: nowrap;
+	width: 1%;
+}
+
+.centerItems {
+	display: block !important;
+	margin: auto;
+}
+
+.fixTable{
+margin-bottom: 12%;
+}
